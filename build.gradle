@@ -1,0 +1,45 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.1"
+    id("io.micronaut.application") version "3.1.1"
+}
+
+version = "0.1.0-SNAPSHOT"
+group = "space.dezentrale.members"
+
+repositories {
+    mavenCentral()
+}
+
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("space.dezentrale.members.*")
+    }
+}
+
+
+dependencies {
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.security:micronaut-security-annotations")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-runtime")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("io.micronaut.security:micronaut-security")
+    implementation("io.micronaut.security:micronaut-security-oauth2")
+    implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation('io.swagger.core.v3:swagger-annotations:2.2.6')
+    runtimeOnly("ch.qos.logback:logback-classic")
+}
+
+// TODO Set the main class
+application {
+    mainClass.set("space.dezentrale.members.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+graalvmNative.toolchainDetection = false
