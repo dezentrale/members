@@ -1,0 +1,153 @@
+openapi: 3.0.3
+info:
+  title: Dezentrale Members Administration
+  description: >-
+    An API and application to administer the members of the hackspace dezentrale
+    in Leipzig.
+  version: 0.1.0-SNAPSHOT
+  contact:
+    name: p1ng0ut
+    email: p1ng0ut@mailbox.org
+  license:
+    name: Apache-2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0'
+servers:
+  - url: '{backend_server}'
+    description: Micronaut backend server
+    variables:
+      backend_server:
+        default: 'http://localhost:8080'
+  - url: '{keycloak_server}'
+    description: Keycloak authentication server
+    variables:
+      keycloak_server:
+        default: 'http://localhost:8081'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: The HTTP code which led to this error
+        title:
+          type: string
+          description: A short title of the problem in kebab-case
+          example: not-found
+        description:
+          type: string
+          description: A description of the error and possible suggestions for solutions
+          example: >-
+            A member with the email you are looking for does not exist. Perhaps
+            you have made a mistake?
+    Member:
+      type: object
+      required:
+        - nickname
+        - email
+      properties:
+        number:
+          type: integer
+          description: >-
+            The member number, which (in the past) was and is simply
+            incremented.
+          example: 1
+          minimum: 1
+        id:
+          type: string
+          description: The UUID to identify the member in various processes.
+          pattern: >-
+            ^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$
+          example: f2012985-fc7a-4500-a689-bf7637bebcfe
+        nickname:
+          type: string
+          example: wau
+        email:
+          type: string
+          example: wau.holland@ccc.de
+          pattern: >-
+            (?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])
+        dateOfBirth:
+          type: string
+          format: date
+          example: '1951-12-20'
+        type:
+          $ref: '#/components/schemas/MemberType'
+        role:
+          $ref: '#/components/schemas/MemberRole'
+        status:
+          $ref: '#/components/schemas/MemberStatus'
+    MemberType:
+      type: string
+      enum:
+        - REGULAR
+        - SUPPORTING
+    MemberRole:
+      type: string
+      enum:
+        - NORMAL
+        - CHAIRMAN
+        - TREASURER
+        - SECRETARY
+        - ASSESSOR
+    MemberStatus:
+      type: string
+      enum:
+        - UNINITIALIZED
+        - GREETED
+        - ACTIVE
+        - BANNED
+        - DISABLED
+        - DELETED
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
+    member_administration_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: '{keycloak_server}'
+          scopes:
+            read_members: read members from our hack space
+            write_members: modify members in our hack space
+paths:
+  /members:
+    post:
+      tags:
+        - create
+        - member
+      description: >-
+        An endpoint to create a new member after it has been approved by the
+        association's board.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Member'
+      responses:
+        '201':
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: bad-request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - member_administration_auth:
+          - read_members
+          - write_members
