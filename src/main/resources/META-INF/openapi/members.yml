@@ -72,6 +72,25 @@ components:
           type: string
           format: date
           example: '1951-12-20'
+        pgpKey:
+          type: string
+          example: >-
+            -----BEGIN PGP SIGNATURE-----
+            iQIzBAABCAAdFiEEqcXfTSLpmZjZh1pREMAcWi9gWecFAmLP1OIACgkQEMAcWi9g
+            WefaaRAA8OO6+VR30iCtEygf3HoIn85CBBYDjskWr+XNQ81dGVJjyTTl+MsRS+AY
+            KV2aNn3ID9uufQGj6Jzf82EYHb401EZU0CH1gkQzAp5PN5bzwpbFwJhbuluJToaB
+            Q7Kg94SQEsjwNkEEw6INZr/OQT+HW1YiuNKIhLncf/ErHMq8EqT3lkHxjQYRb6mt
+            hpyP4/4esXNXOKVDxfThGXZFXZ8m9JQff5hglEYzz8+tnkc/XyxwNd7tqc1/FbKE
+            U+84kVyPEHcUG5OMqN000CNpQmjfOTcUbdN44lYAL5WGe1Z7qTg4jf66LqmOoP9R
+            ePzP3DsV5rBnKkSdoxryfBjvUW/4E5KlBMfgtHlGgVGQv/H0qbgBpHJEB08M4xGh
+            GnSovlh8KFMSBaQHEaqux9Bv5yAQjmd5X5u+sES9uDETRuQ0wmcdXhOoFZW4NtiM
+            jiq6wH+nhXa9oLV4G7simuCNpEtT038CCzUpla1tlnnxthimBE73uxy40z3cjtPw
+            uoKropdjqgiKy4YCckKpA+hAY+/4pMRQ+V+ZgMqZmnU6Exkf1lJNwsJd2FK0u+Hu
+            ZULkFS2Y2QFvATd+0dNNLvK+itYUaYdemOuYmjV0gbIvFzR9cqRNN6W0Dc0bpE+U
+            kK+tiYuLhmpiRxwVkTgOZiaIjmWFLx1YrOSN7O2P3BFymq5QVNA=
+            =tjq+
+            -----END PGP SIGNATURE-----
+          format: string
         type:
           $ref: '#/components/schemas/MemberType'
         role:

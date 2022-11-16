@@ -1,5 +1,3 @@
-
-
 # Member
 
 The class is defined in **[Member.java](../../src/main/java/space/dezentrale/members/model/Member.java)**
@@ -13,9 +11,11 @@ The class is defined in **[Member.java](../../src/main/java/space/dezentrale/mem
 | **nickname**    | `String`       |                                                                       |                     |
 | **email**       | `String`       |                                                                       |                     |
 | **dateOfBirth** | `LocalDate`    |                                                                       | [optional property] |
+| **pgpKey**      | `String`       |                                                                       | [optional property] |
 | **type**        | `MemberType`   |                                                                       | [optional property] |
 | **role**        | `MemberRole`   |                                                                       | [optional property] |
 | **status**      | `MemberStatus` |                                                                       | [optional property] |
+
 
 
 
