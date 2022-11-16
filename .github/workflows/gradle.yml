@@ -30,6 +30,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Make Gradle executeable
-      run: wget http://ftp.us.debian.org/debian/pool/main/g/gradle/gradle_4.4.1-16_all.deb && apt install ./gradle_4.4.1-16_all.deb
+      run: wget http://ftp.us.debian.org/debian/pool/main/g/gradle/gradle_4.4.1-16_all.deb && sudo apt install ./gradle_4.4.1-16_all.deb
     - name: Build with Gradle
       run: gradle build
