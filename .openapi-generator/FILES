@@ -22,6 +22,3 @@ src/main/java/space/dezentrale/members/model/MemberStatus.java
 src/main/java/space/dezentrale/members/model/MemberType.java
 src/main/resources/application.yml
 src/main/resources/logback.xml
-src/test/java/space/dezentrale/members/model/MemberRoleTest.java
-src/test/java/space/dezentrale/members/model/MemberStatusTest.java
-src/test/java/space/dezentrale/members/model/MemberTypeTest.java
